@@ -1,0 +1,11 @@
+# Ignorar entornos virtuales de Python
+venv/
+.env/
+.envrc/
+.pipenv/
+
+# Ignorar archivos de historial
+.history
+
+# Ignorar archivos .DS_Store (archivos ocultos generados por macOS)
+.DS_Store

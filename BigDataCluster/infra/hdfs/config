@@ -1,0 +1,17 @@
+CORE_CONF_fs_defaultFS=hdfs://namenode:9000
+CORE_CONF_fs_default_name=hdfs://namenode:9000
+CORE_CONF_hadoop_http_staticuser_user=root
+CORE_CONF_hadoop_proxyuser_hue_hosts=*
+CORE_CONF_hadoop_proxyuser_hue_groups=*
+CORE_CONF_io_compression_codecs=org.apache.hadoop.io.compress.SnappyCodec
+CORE_CONF_ipc_maximum_data_length=134217728
+
+HDFS_CONF_dfs_webhdfs_enabled=true
+HDFS_CONF_dfs_permissions_enabled=false
+HDFS_CONF_dfs_namenode_datanode_registration_ip___hostname___check=false
+HDFS_CONF_dfs_replication=2
+
+HDFS_CONF_dfs_datanode_handler_count=10  # Incrementar el número de hilos de DataNode para manejar más conexiones simultáneamente
+HDFS_CONF_dfs_datanode_socket_write_timeout=120000  # 120 segundos de tiempo de espera
+HDFS_CONF_dfs_client_socket_timeout=120000  
+HDFS_CONF_io_file_buffer_size=131072
