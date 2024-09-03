@@ -17,13 +17,13 @@ except LookupError:
 # -r or --range: Specify the word length range with two integers, e.g., 3 10 for lengths between 3 and 10 characters (default is [3, 10]).
 # examples
 # Generate with default values:
-    # python generate_wordcount.py
+    # python dynamicGenerator.py
 # Generate a file with 500,000 lines and 20 words per line:
-    # python generate_wordcount.py -l 500000 -w 20
+    # python dynamicGenerator.py -l 500000 -w 20
 # Generate with custom word length range (5 to 15 characters):
-    # python generate_wordcount.py -r 5 15
+    # python dynamicGenerator.py -r 5 15
 # Specify a custom output file:
-    # python generate_wordcount.py -o my_wordcount.txt
+    # python dynamicGenerator.py -o my_wordcount.txt
     
 class WordCountFileGenerator:
     def __init__(self, output_file, num_lines, words_per_line):
@@ -36,7 +36,7 @@ class WordCountFileGenerator:
         # Generar una línea con palabras aleatorias del diccionario inglés
         return ' '.join(random.choice(self.word_list) for _ in range(self.words_per_line))
 
-    def generate_wordcount_file(self):
+    def dynamicGenerator_file(self):
         # Escribir el archivo con las palabras generadas
         with open(self.output_file, "w") as f:
             for _ in range(self.num_lines):
@@ -74,7 +74,7 @@ def main():
     
     # Instanciar la clase y generar el archivo
     generator = WordCountFileGenerator(args.output, args.lines, args.words)
-    generator.generate_wordcount_file()
+    generator.dynamicGenerator_file()
 
 if __name__ == "__main__":
     main()
