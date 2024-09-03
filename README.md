@@ -30,7 +30,7 @@ cd BigDataProcessingInContainersWithSparkAndHadoop
 1. Go to hdfs folder and build the base image
 
 ```bash
-cd BigDataCluster/infra/hdfs/baseimage/docker-hadoop/base/
+cd BigDataCluster/infra/hdfs/baseimage/base/
 
 docker build . -t hadoop-3.4.0 -f Dockerfile.3.4.0
 or
