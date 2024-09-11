@@ -1,0 +1,69 @@
+FROM ubuntu:24.04
+
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    openjdk-17-jdk \
+    net-tools \
+    curl \
+    gnupg \
+    netcat-openbsd \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-arm64
+
+# Import Hadoop release keys (already included in the project)
+#COPY hadoop_files/KEYS /tmp/KEYS
+#RUN gpg --import /tmp/KEYS
+
+RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS
+
+RUN gpg --import KEYS
+
+# Set Hadoop version and download URL
+ENV HADOOP_VERSION 3.4.0
+ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
+ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
+
+# Copy Hadoop tarball and signature file to the container
+# COPY hadoop_files/hadoop-$HADOOP_VERSION.tar.gz /tmp/hadoop.tar.gz
+# COPY hadoop_files/hadoop-$HADOOP_VERSION.tar.gz.asc /tmp/hadoop.tar.gz.asc
+
+# # Verify and extract Hadoop
+# RUN set -x && \
+#     gpg --verify /tmp/hadoop.tar.gz.asc /tmp/hadoop.tar.gz && \
+#     tar -xvf /tmp/hadoop.tar.gz -C /opt/ && \
+#     rm /tmp/hadoop.tar.gz*
+
+# RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
+
+# RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
+
+# RUN mkdir /hadoop-data
+
+RUN set -x \
+    && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
+    && curl -fSL "$HADOOP_URL.asc" -o /tmp/hadoop.tar.gz.asc \
+    && gpg --verify /tmp/hadoop.tar.gz.asc \
+    && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
+    && rm /tmp/hadoop.tar.gz*
+
+RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
+
+RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
+
+RUN mkdir /hadoop-data
+
+
+
+ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV HADOOP_CONF_DIR=/etc/hadoop
+ENV MULTIHOMED_NETWORK=1
+ENV USER=root
+ENV PATH $HADOOP_HOME/bin/:$PATH
+
+ADD entrypoint.sh /entrypoint.sh
+
+RUN chmod a+x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+#CMD ["hdfs", "namenode", "-format"]
