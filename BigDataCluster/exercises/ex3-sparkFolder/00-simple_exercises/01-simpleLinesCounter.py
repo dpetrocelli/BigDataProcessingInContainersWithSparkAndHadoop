@@ -6,6 +6,7 @@ spark = SparkSession.builder \
     .config("spark.hadoop.fs.defaultFS", "hdfs://namenode:9000") \
     .getOrCreate()
 
+
 # Leer un archivo de texto desde HDFS
 rdd = spark.sparkContext.textFile("hdfs://namenode:9000/user/david/output/part-r-00000")
 
