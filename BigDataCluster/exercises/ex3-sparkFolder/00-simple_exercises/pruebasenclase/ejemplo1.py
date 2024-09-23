@@ -5,7 +5,7 @@ from pyspark.sql import SparkSession
 spark = SparkSession \
     .builder \
     .appName("Create DF on fly") \
-    .master("local[*]") \
+    .master("spark://spark:7077") \
     .getOrCreate()
 
 # Create an Dataframe from range of values

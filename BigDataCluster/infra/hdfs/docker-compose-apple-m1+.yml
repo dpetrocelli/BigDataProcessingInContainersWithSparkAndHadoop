@@ -87,7 +87,7 @@ services:
     networks:
       - etl_task
     deploy:
-      replicas: 3
+      replicas: 1
 
   # jupyter:
   #   image: jupyter/pyspark-notebook:latest
